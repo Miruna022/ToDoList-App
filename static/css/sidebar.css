@@ -1,0 +1,80 @@
+/*NAVIGATION BAR*/
+nav{
+    margin: 0;
+    padding: 0;
+    background-color: #454040;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    z-index: 1000; 
+}
+nav ul{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+nav li{
+    height: 60px;
+}
+nav a{
+    height: 100%;
+    padding: 0 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    font-size: 18px;
+}
+nav a:hover{
+    background-color: rgba(136, 136, 136, 0.5);
+}
+nav li:first-child{
+    margin-right: auto;
+    font-size: 1.5em;
+}
+.sidebar{
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 250px;
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(10px);
+    box-shadow: -10px 0 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.sidebar li{
+    width: 100%;
+}
+.sidebar a {
+    font-size: 1.5em; /* Adjust size as needed */
+    padding: 15px 20px; /* Add padding for better spacing */
+    text-decoration: none;
+    color: black; /* Ensure visibility */
+    display: block; /* Make each link take full width */
+}
+
+.menu-button{
+    display: none;
+}
+@media(max-width: 900px){
+    .hideOnMobile{
+        display: none;
+    }
+    .menu-button{
+        display: block;
+    }
+}
+@media(max-width: 400px){
+    .sidebar{
+        width: 100%;
+    }
+}

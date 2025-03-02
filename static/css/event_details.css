@@ -1,0 +1,99 @@
+/* Reset margins and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Ensure padding and borders do not affect element width */
+}
+
+body {
+    min-height: 100vh;
+    background-position: top;
+    background-size: cover;
+}
+.event p.desc {
+    flex: 1;
+    font-style: italic;
+    font-size: 2.5vh;
+    display: grid;
+    justify-content: center;
+    padding: 0 30px;
+}
+
+.event{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1%; 
+}
+.box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 0 25px;
+    height: 80px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    font-family: 'Playfair Display', serif;
+}
+.start-end-date {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%; 
+    margin-top: 10px;
+}
+.info{
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    font-family: 'Playfair Display', serif;
+}
+.event-content {
+    display: flex;
+    align-items: stretch;
+    width: 95%;
+    height: fit-content;
+    border-radius: 15px;
+}
+.event-title{
+    font-size: 28px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+.start-end {
+    display: flex; /* Ensures both elements are on the same row */
+    justify-content: space-between; /* Optional, will spread out items across the row */
+    align-items: center;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50px;
+}
+.icon{
+    width: 25px;
+    height: 25px;
+    margin: 2px 10px;
+}
+.trash{
+    background-color: #FCFCFC;
+    border: none;
+    cursor: pointer;
+}
+.trash-icon{
+    width:45px;
+    height: 45px;
+}
+.start-end-time{
+    margin-bottom: 6px;
+    margin-right: 10px;
+    margin-top: 2px;
+}
+.title-author{
+    display: flex;
+    flex-direction: column;
+}

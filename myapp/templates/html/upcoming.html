@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming-tasks</title>
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/upcoming.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/event_details.css' %}">
+    <script src="{% static 'js/sidebar.js' %}"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul class="sidebar">
+                <li onclick=hideSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg></a></li>
+                <li><a href="{% url 'upcoming' %}">Upcoming</a></li>
+                <li><a href="{% url 'addtask' %}">Add Events</a></li>
+            </ul>
+            <ul>
+                <li><a href="#">Welcome back!</a></li>
+                <li class="hideOnMobile"><a href="{% url 'upcoming' %}">Upcoming</a></li>
+                <li class="hideOnMobile"><a href="{% url 'addtask' %}">Add Events</a></li>
+                <li class="menu-button" onclick=showSidebar()><a href="#"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg></a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% block content %}
+        <article id="more">
+            <br>
+            <div class="change">
+                <h2 class="header">Upcoming events - <span id="calendar-name">{{ current_calendar|title }}</span></h2>
+                <button id="change-calendar">Change calendar</button>
+            </div>
+            <hr>
+            <br>
+
+            {% for event in events %}
+            <section class="event">
+                <div class="event-content" 
+                        {% if event.days_left == 0 %} 
+                            style="background-color: #fddbd2;" 
+                        {% elif event.days_left > 0 and event.days_left <= 3 %}
+                            style="background-color: #fdf2d2;" 
+                        {% elif event.days_left > 3 %}
+                             style="background-color: #d3fdd7;" 
+                        {% endif %}>
+                    <div class="box"
+                            {% if event.days_left == 0 %} 
+                                style="background-color: #FF9E86;" 
+                            {% elif event.days_left > 0 and event.days_left <= 3 %}
+                                style="background-color: #FFE386;" 
+                            {% elif event.days_left > 3 %}
+                                style="background-color: #86FF8E;" 
+                            {% endif %}>
+                        <p class="start-end-date">{{ event.display_date }}</p>
+                    </div>
+                    <div class="info">
+                        <div class="title-author">
+                            <h2 class="event-title">{{ event.summary }}</h2>
+                            {% if current_calendar == 'shared' %}
+                                <p><strong>By: </strong>{{ event.creator_email }}</p>
+                            {% endif %}
+                        </div>
+                        <p class="desc" id="event-desc">{{ event.description|default:""}}</p>
+                        <div class="start-end">
+                            <img src="../../../static/images/clock.png" alt="clock icon" class="icon">
+                            <p class="start-end-time"> {{ event.display_time}}</p>
+                        </div>
+                    </div>                  
+                </div>
+                <button class="trash" onclick="redirectToPage('{{ event.event_id }}')">
+                    <img src="../../../static/images/trash can.png" alt="trash-can-icon" class="trash-icon">
+                </button>
+            </section>
+            {% empty %}
+            <p>No upcoming events.</p>
+            {% endfor %}
+        </article>   
+        {% endblock %} 
+    </main>
+    <script>
+         function handleChangeCalendar() {
+            const currentCalendar = document.getElementById('calendar-name').textContent.trim().toLowerCase();
+            const newCalendar = currentCalendar === 'personal' ? 'shared' : 'personal';
+
+            // Update the calendar name in the heading
+            document.getElementById('calendar-name').textContent = newCalendar.charAt(0).toUpperCase() + newCalendar.slice(1);
+
+            // Fetch events for the new calendar (use AJAX to avoid page reload)
+            fetch(`/upcoming/?calendar=${newCalendar}`)
+                .then(response => response.text())
+                .then(html => {
+                    // Replace only the events inside the content
+                    document.getElementById('more').innerHTML = html;
+
+                    // Re-attach the click event listener for the "Change calendar" button
+                    document.getElementById('change-calendar').addEventListener('click', handleChangeCalendar);
+                })
+                .catch(error => console.error('Error fetching events:', error));
+        }
+
+
+        // Attach the initial event listener to the "Change calendar" button
+        document.getElementById('change-calendar').addEventListener('click', handleChangeCalendar);
+
+        function redirectToPage(eventId){
+            const calendar = document.getElementById("calendar-name").innerText.toLowerCase(); // Get current calendar (personal/shared)
+            if(eventId) {
+                window.location.href = `/google/event/delete/${eventId}/${calendar}/`;
+            } else {
+                alert("Event ID not found!");
+            }
+        }
+    </script>
+</body>
+</html>

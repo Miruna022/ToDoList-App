@@ -1,0 +1,42 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    min-height: 100vh;
+    background-color: #FCFCFC;
+}
+
+/*CONTENT*/
+.change{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 20px;
+}
+.details-container{
+    padding: 1.5rem;
+    flex: 1;
+    border-radius: 2rem;
+    border: rgb(53, 53, 53) 0.1rem solid;
+    border-color: rgb(163, 163, 163);
+    text-align: center;
+}
+.header{
+    font-size: 45px;
+    text-align: left;
+    font-family: 'Playfair Display', serif;
+}
+.text{
+    font-size: 1.2rem;
+    font-family: 'Playfair Display', serif;
+}
+
+#more{
+    height: inherit;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 3%;
+    padding-top: 3.5%;
+    box-sizing: border-box;
+}
